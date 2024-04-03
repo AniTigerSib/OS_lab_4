@@ -27,3 +27,11 @@ void PrintSequence(int* sequence, int size) {
     }
     printf("\n");
 }
+
+void FillArrayWithRandomNumbers(int *arr, int size) {
+    srand(time(NULL));
+
+    for (int i = 0; i < size; i++) {
+        arr[i] = rand() % 100; // Заполнение случайными числами в диапазоне от 0 до 99
+    }
+}
