@@ -6,6 +6,5 @@
 
 #include "../sequence/sequence_functions.h"
 
-void PrintSequence(int* sequence, int size);
 
 #endif
