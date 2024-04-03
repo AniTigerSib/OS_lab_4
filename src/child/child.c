@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "sorting_alg.h"
-
-void PrintSequence(int* sequence, int size);
+#include "child.h"
 
 int main() {
     int* sequence = NULL;
@@ -28,13 +23,7 @@ int main() {
     if (flag == 2) {
         flag = 0;
         Qsort(sequence, size);
+        PrintSequence(sequence, size);
     }
-    return flag;
-}
-
-void PrintSequence(int* sequence, int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d ", sequence[i]);
-    }
-    printf("\n");
+    exit(flag);
 }
