@@ -1,0 +1,29 @@
+#include "sequence_functions.h"
+
+void Swap(int* a, int* b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void Qsort(int* arr, int n) {
+    if (n <= 1) return;
+    int pivot = arr[n / 2];
+    int i = -1;
+    int j = n;
+    while (1) {
+        do i++; while (arr[i] < pivot);
+        do j--; while (arr[j] > pivot);
+        if (i >= j) break;
+        Swap(&arr[i], &arr[j]);
+    }
+    Qsort(arr, i);
+    Qsort(arr + i, n - i);
+}
+
+void PrintSequence(int* sequence, int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", sequence[i]);
+    }
+    printf("\n");
+}
