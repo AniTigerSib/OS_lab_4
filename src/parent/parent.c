@@ -9,18 +9,21 @@ int main() {
     if (pid < CHILD_PROCESS_PID) {
         printf("Error: fork failed\n");
     } else if (pid == CHILD_PROCESS_PID) { // Child process
-        dup2(fd[0], STDIN_FILENO);
-        close(fd[1]);
+        close(fd[P_WRITE]); // Closing inactive pipe branch
+        dup2(fd[P_READ], STDIN_FILENO);
+        close(fd[P_READ]);
         ChildFunc();
     } else {
-        dup2(fd[1], STDOUT_FILENO);
-        close(fd[0]);
+        close(fd[P_READ]); // Closing inactive pipe branch
 
         int sequence[SIZE_OF_SEQUENCE] = {0};
         FillArrayWithRandomNumbers(sequence, SIZE_OF_SEQUENCE);
-        PrintSequence(sequence, SIZE_OF_SEQUENCE);
 
-        close(fd[1]);
+        dprintf(fd[P_WRITE], "%d\n", SIZE_OF_SEQUENCE);
+        PrintSeqIntoPipe(sequence, SIZE_OF_SEQUENCE, fd[P_WRITE]);
+
+        close(fd[P_WRITE]); // Closing new inactive pipe branch (for parent)
+        
         wait(NULL); // Waiting for process to stop
     }
     return 0;
@@ -32,7 +35,7 @@ static void ChildFunc() {
     int flag = FLAG_IS_NORMAL;
     char buff_char = '\0';
 
-    if (scanf("%d%c", &size, &buff_char) != 2 || buff_char != '\n') {
+    if (scanf("%d", &size) != 1) {
         printf("Error: expected size of sequence in following format: {integer num}{\\n}\n");
     } else {
         for (int i = 0; i < size && !flag; i++) {
@@ -50,6 +53,9 @@ static void ChildFunc() {
         if (sequence == NULL) {
             printf("Error: empty sequence or some problems here");
         } else {
+            printf("Sequence: ");
+            PrintSequence(sequence, size);
+            printf("\n\nSorted sequence: ");
             if (flag == FLAG_IS_NORMAL) {
                 Qsort(sequence, size);
                 PrintSequence(sequence, size);
