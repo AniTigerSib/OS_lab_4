@@ -12,7 +12,13 @@ int main() {
         close(fd[P_WRITE]); // Closing inactive pipe branch
         dup2(fd[P_READ], STDIN_FILENO);
         close(fd[P_READ]);
+#ifdef WITHOUT_CHILD
+        if (execl("./build/child", NULL) == -1) {
+            printf("Error: execl failed\n");
+        }
+#else
         ChildFunc();
+#endif
     } else {
         close(fd[P_READ]); // Closing inactive pipe branch
 
