@@ -20,7 +20,7 @@ int main() {
         FillArrayWithRandomNumbers(sequence, SIZE_OF_SEQUENCE);
 
         dprintf(fd[P_WRITE], "%d\n", SIZE_OF_SEQUENCE);
-        PrintSeqIntoPipe(sequence, SIZE_OF_SEQUENCE, fd[P_WRITE]);
+        PrintSeqIntoStreamByDescryptor(sequence, SIZE_OF_SEQUENCE, fd[P_WRITE]);
 
         close(fd[P_WRITE]); // Closing new inactive pipe branch (for parent)
         

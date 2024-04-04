@@ -28,6 +28,12 @@ void PrintSequence(int* sequence, int size) {
     printf("\n");
 }
 
+void PrintSeqIntoPipe(int *sequence, int size, int fd) {
+    for (int i = 0; i < size; i++) {
+        dprintf(fd, "%d ", sequence[i]);
+    }
+}
+
 void FillArrayWithRandomNumbers(int *arr, int size) {
     srand(time(NULL));
 

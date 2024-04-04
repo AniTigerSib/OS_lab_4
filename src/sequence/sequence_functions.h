@@ -9,5 +9,6 @@ void Swap(int* a, int* b);
 void Qsort(int* arr, int n);
 void PrintSequence(int* sequence, int size);
 void FillArrayWithRandomNumbers(int *arr, int size);
+void PrintSeqIntoPipe(int *sequence, int size, int fd);
 
 #endif
